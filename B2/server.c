@@ -23,7 +23,6 @@ memcpy(buf2,buf,sizeof(buf2));
 removeChar(buf2,10);
 removeChar(buf2,13);
     for (int i=pos;i>=pos+1-(buf2[pos]-'0');i--){
-        // printf("Ham giam buf[i]= %d buf[i-1]= %d\n",buf2[i],buf2[i-1]);
         if (buf2[i]!=buf2[i-1]+1) 
         {   
             return 0;
@@ -34,14 +33,8 @@ removeChar(buf2,13);
 int checkIncrease (char* buf,int startNumber){
     
     for (int i=0;i<=9-startNumber-1;i++){
-        // printf("Ham tang buf[i]=%d buf[i+1]=%d\n",buf[i],buf[i+1]);
-        if (buf[i+1]==13 && buf[i+2]==10) {
-            i+=2;
-            continue;
-        }
         if (buf[i]!=buf[i+1]-1) return 0;
     }
-    // printf("%d\n",9-startNumber);
     return 1;
 }
 int main()
@@ -80,63 +73,24 @@ printf("Accepted socket %d from IP: %s:%d \n",client,inet_ntoa(client_addr.sin_a
         if (ret <= 0) break;
             if (ret < sizeof(buf))
             buf[ret] = 0;  
+             printf("buf truoc =  %s\n",buf);
+             printf("Receive %d byte %s\n",ret,buf);
             removeChar(buf,10);
             removeChar(buf,13);
-             printf("Receive %d byte %s\n",ret,buf);
             if (strstr(buf,"0123456789")){
                 count++;
-            //  printf("Increase Count strstr %d\n",count);
             }
-           
-            // printf("end = %d buf[0] = %d\n",end,buf[0]-'0'-1);
             if (end == buf[0] -'0'-1){
                     if (checkIncrease(buf,end+1)){
-                       
                         count++;
-                        //  printf("Increase Count %d\n",count);
                         end=-2;
                     }
                 }
-                if (splash==1){
-                    if (buf[0]!='n') break;
-                     if (end == buf[1]-'0'-1){
-                    if (checkIncrease(buf+1,end+1)){
-                        
-                        count++;
-                        // printf("Increase Count %d\n",count);
-                        end=-2;
-                        splash=0;
-                    }
-                }
-                }
-             if (ret==sizeof(buf)){
-            if (buf[strlen(buf)-1]==10){
-                if (buf[ret-2]==13){
-                   if (buf[strlen(buf)-3]>=48 && buf[strlen(buf)-3]<=57)
-                    {
-                        if (checkDecrease(buf,strlen(buf)-3)){
-                            end = buf[strlen(buf)-3]-'0';
-                        }
-                    }
-                }
-            }
-            else if (buf[strlen(buf)-1]==13){
-                splash=1;
-                if (buf[strlen(buf)-2]>=48 && buf[strlen(buf)-2]<=57){
-                    if (checkDecrease(buf,strlen(buf)-2)){
-                        end =buf[ret-2]-'0';
-                    }
-                }
-            }
-            else{
-                // printf("Phan tu cuoi %d \n",buf[strlen(buf)-1]-'0');
                 if (buf[strlen(buf)-1]>=48 && buf[strlen(buf)-1]<=57){
                     if (checkDecrease(buf,strlen(buf)-1)){
                         end =buf[strlen(buf)-1]-'0';
                         printf("\n");
-                    }
-                }
-            }         
+                    }     
     }
 }
  printf("last count =  %d\n",count);
