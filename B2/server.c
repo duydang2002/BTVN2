@@ -73,7 +73,6 @@ printf("Accepted socket %d from IP: %s:%d \n",client,inet_ntoa(client_addr.sin_a
         if (ret <= 0) break;
             if (ret < sizeof(buf))
             buf[ret] = 0;  
-             printf("buf truoc =  %s\n",buf);
              printf("Receive %d byte %s\n",ret,buf);
             removeChar(buf,10);
             removeChar(buf,13);
